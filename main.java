@@ -23,7 +23,21 @@ public class main {
                 //     System.out.println("RandomV: " + (i + 1) + " File and Offsets: " + Memory.getInstance().getHashIndex().get(i + 1));
                 // }
             } else if (commandArray[0].toUpperCase().equals("SELECT")) {
-
+                if (commandArray[6].equals("=")) {
+                    String findRandomV = commandArray[7];
+                    int findKey = Integer.parseInt(findRandomV);
+                    if(Memory.getInstance().isIndexerBuilt()) {
+                        if (Memory.getInstance().getHashIndex().containsKey(findKey)) {
+                            System.out.println(Memory.getInstance().getHashIndex().get(findKey));
+                        }
+                        else {
+                            System.out.println("No record found.");
+                        }
+                    }
+                    else {
+                        System.out.println("Perform Table Scan");
+                    }
+                }
             } else if (commandArray[0].toUpperCase().equals("EXIT")) {
                 break;
             }

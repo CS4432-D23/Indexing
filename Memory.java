@@ -89,6 +89,18 @@ public class Memory {
     }
 
     /**
+     * This method checks if the index is built.
+     * @return true if the index is built, false otherwise
+     */
+    public Boolean isIndexerBuilt() {
+        if (hashIndex == null || arrayIndex == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * This method returns the hash-based index.
      * @return the hash-based index
      */
