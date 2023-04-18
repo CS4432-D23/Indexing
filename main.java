@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,20 +22,49 @@ public class main {
                 //     System.out.println("RandomV: " + (i + 1) + " File and Offsets: " + Memory.getInstance().getHashIndex().get(i + 1));
                 // }
             } else if (commandArray[0].toUpperCase().equals("SELECT")) {
+                ArrayList<String> records = new ArrayList<>();
                 if (commandArray[6].equals("=")) {
                     String findRandomV = commandArray[7];
                     int findKey = Integer.parseInt(findRandomV);
                     if(Memory.getInstance().isIndexerBuilt()) {
+                        System.out.println("Search using hash index...");
+                        long startTime = System.currentTimeMillis();
                         if (Memory.getInstance().getHashIndex().containsKey(findKey)) {
-                            System.out.println(Memory.getInstance().getHashIndex().get(findKey));
+                            // System.out.println(Memory.getInstance().getHashIndex().get(findKey));
+                            ArrayList<String> values = Memory.getInstance().getHashIndex().get(findKey);
+                            for (String s : values) {
+                                String[] valueArr = s.split("\\|");
+                                String filenumber = valueArr[0].trim();
+                                String offset = valueArr[1].trim();
+                                // System.out.println("File Number: " + filenumber + " Offset: " + offset);
+                                String record = Memory.getInstance().getRecord(filenumber, offset);
+                                records.add(record);
+                            }
                         }
-                        else {
+                        else { // if the key is not found
                             System.out.println("No record found.");
                         }
+                        long endTime = System.currentTimeMillis() - startTime;
+                        System.out.println("Time taken: " + endTime + "ms");
                     }
-                    else {
-                        System.out.println("Perform Table Scan");
+                    else { // if the index is not built, use table scan
+                        System.out.println("Search using table scan...");
+                        long startTime = System.currentTimeMillis();
+                        for (String record : Memory.getInstance().getRecord(findKey)) {
+                            records.add(record);
+                        }
+                        long endTime = System.currentTimeMillis() - startTime;
+                        System.out.println("Time taken: " + endTime + "ms");
                     }
+                    if (records.isEmpty()) { // if the records is empty
+                        System.out.println("No record found.");
+                    }
+                    else { // print out the records
+                        for (String record : records) { 
+                            System.out.println(record);
+                        }
+                    }
+                    
                 }
             } else if (commandArray[0].toUpperCase().equals("EXIT")) {
                 break;
