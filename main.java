@@ -42,6 +42,7 @@ public class main {
                             // System.out.println(Memory.getInstance().getHashIndex().get(findKey));
                             ArrayList<String> values = Memory.getInstance().getHashIndex().get(findKey);
                             int count = 0;
+                            records.add(Integer.toString(count));
 
                             for (String s : values) {
                                 String[] valueArr = s.split("\\|");
@@ -52,11 +53,13 @@ public class main {
                                 records.add(record);
                                 count++;
                             }
-                            System.out.println("Number of data files read: " + count);
+
+                            records.set(0, Integer.toString(count));
 
                         }
                         else { // if the key is not found
                             System.out.println("No record found.");
+                            records.add("0");
                         }
                         long endTime = System.currentTimeMillis() - startTime;
                         System.out.println("Time taken: " + endTime + "ms");
@@ -72,16 +75,16 @@ public class main {
                         System.out.println("Time taken: " + endTime + "ms");
                     }
 
-                    if (records.isEmpty()) { // if the records is empty
+                    int numFiles = Integer.parseInt(records.get(0));
+                    System.out.println("Number of data files read: " + numFiles);
+
+                    if (records.size() < 2) { // if the records is empty
                         System.out.println("No record found.");
                     }
                     
                     else { // print out the records
 
                         Boolean isFirst = true;
-
-                        int numFiles = Integer.parseInt(records.get(0));
-                        System.out.println("Number of data files read: " + numFiles);
 
                         for (String record : records) { 
                             if (!isFirst) {
@@ -99,9 +102,6 @@ public class main {
 
                     int findRandomV1 = Integer.parseInt(commandArray[7]);
                     int findRandomV2 = Integer.parseInt(commandArray[11]);
-
-                    // System.out.println(findRandomV1);
-                    // System.out.println(findRandomV2);
 
                     if (Memory.getInstance().isIndexerBuilt()) { // if the array index is built
                         System.out.println("Search using array index...");
@@ -121,42 +121,21 @@ public class main {
 
                         long startTime = System.currentTimeMillis();
 
-                        // int numFiles = 0;
-                        // records.add(Integer.toString(numFiles));
-
-                        // while (findRandomV1 <= findRandomV2) {
-                        //     Boolean isFirst = true;
-                        //     for (String record : Memory.getInstance().getRecord(findRandomV1)) {
-                        //         if (!isFirst) {
-                        //             records.add(record);
-                        //         }
-                        //         else {
-                        //             numFiles += Integer.parseInt(record);
-                        //             isFirst = false;
-                        //         }
-                        //     }
-                        //     findRandomV1++;
-                        // }
-
                         records = Memory.getInstance().getRecordTableScan(findRandomV1, findRandomV2);
                             
                         long endTime = System.currentTimeMillis() - startTime;
                         System.out.println("Time taken: " + endTime + "ms");
-                        // System.out.println("Number of data files read: " + numFiles);
-                        // records.set(0, Integer.toString(numFiles));
 
                     }
+                    int numFiles = Integer.parseInt(records.get(0));
+                    System.out.println("Number of data files read: " + numFiles);
 
-                    if (records.isEmpty()) { // if the records is empty
+                    if (records.size() < 2) { // if the records is empty
                         System.out.println("No record found.");
                     }
                     else { // print out the records
 
                         Boolean isFirst = true;
-                        int numFiles = Integer.parseInt(records.get(0));
-
-                        System.out.println("Number of data files read: " + numFiles);
-
                         for (String record : records) { 
                             if (!isFirst) {
                                 System.out.println(record);
@@ -169,8 +148,10 @@ public class main {
                     
                 }
                 else if (commandArray[6].equals("!=")) {
-
                     // section 6
+
+                    System.out.println("Search using table scan...");
+
                     long startTime = System.currentTimeMillis();
 
                     int RandomV = Integer.parseInt(commandArray[7]);
@@ -179,19 +160,19 @@ public class main {
                     long endTime = System.currentTimeMillis() - startTime;
                     System.out.println("Time taken: " + endTime + "ms");
 
-                    if (records.isEmpty()) { // if the records is empty
+                    int numFiles = Integer.parseInt(records.get(0));
+                    System.out.println("Number of data files read: " + numFiles);
+
+                    if (records.size() < 2) { // if the records is empty
                         System.out.println("No record(s) found.");
                     }
                     else { // print out the records
 
                         Boolean isFirst = true;
-                        int numFiles = Integer.parseInt(records.get(0));
-
-                        System.out.println("Number of data files read: " + numFiles);
-
+                        
                         for (String record : records) { 
                             if (!isFirst) {
-                                // System.out.println(record);
+                                System.out.println(record);
                             }
                             else {
                                 isFirst = false;

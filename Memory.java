@@ -166,6 +166,11 @@ public class Memory {
 
         ArrayList<String> records = new ArrayList<>();
 
+        if (RandomV1 < 1 || RandomV1 > 5000 || RandomV2 < 1 || RandomV2 > 5000 || RandomV1 > RandomV2) {
+            records.add("0");
+            return records;
+        }
+
         int fileNum = 0;
         records.add(Integer.toString(fileNum));
 
