@@ -23,7 +23,7 @@ public class main {
                 // for (int i = 0; i < 1000; i++) {
                 //     System.out.println("RandomV: " + (i + 1) + " File and Offsets: " + Memory.getInstance().getHashIndex().get(i + 1));
                 // }
-            } else if (commandArray[0].toUpperCase().equals("SELECT")) {
+            } else if (commandArray[0].toUpperCase().equals("SELECT")) { // if the command is SELECT
                 ArrayList<String> records = new ArrayList<>();
 
                 if (commandArray[6].equals("=")) {
@@ -82,6 +82,22 @@ public class main {
 
                 else if (commandArray[6].equals(">")) {
                     // section 5
+
+                    String findRandomV1 = commandArray[7];
+                    String findRandomV2 = commandArray[11];
+
+                    System.out.println(findRandomV1);
+                    System.out.println(findRandomV2);
+
+                    if (Memory.getInstance().isIndexerBuilt()) {
+                        System.out.println("Search using array index...");
+                        long startTime = System.currentTimeMillis();
+
+                    }
+                    else { // if the index is not built, use table scan
+                        System.out.println("Search using table scan...");
+                    }
+                    
                 }
                 else if (commandArray[6].equals("!=")) {
                     // section 6
